@@ -6,9 +6,17 @@ import xml.dom.minidom
 
 RELOAD_COMMAND_ARGS = '/reload-config'
 
-OPT_NO = '0'
-OPT_YES = '1'
-OPT_DEFAULT = '2'
+YESNO_VALUES = {
+    False: '0',
+    True: '1',
+    None: '2',
+}
+YESNO_OPTIONS = {
+    '0': False,
+    '1': True,
+    '2': None,
+}
+
 SPEED_DEFAULT = '0'
 SPEED_UNLIMITED = '1'
 SPEED_CONSTANT = '2'
@@ -81,12 +89,16 @@ class ftpSettingElement(ftpNamedElement):
 
     def getOption(self, name):
         return self.options[name].value if self.options.has_key(name) else None
+    def getYesNoOption(self, name):
+        return YESNO_OPTIONS[self.getOption(name)]
 
     def setOption(self, name, value):
         if self.options.has_key(name):
             self.options[name].value = value
         else:
             self._addOption(name, value)
+    def setYesNoOption(self, name, value):
+        self.setOption(name, YESNO_VALUES[value])
 
     def _addOption(self, name, value=''):
         if name in self.options.keys(): raise Exception('option %s already exists' % name)
@@ -105,16 +117,16 @@ class ftpPermission(ftpSettingElement):
         ftpElement.createElement(self, **kwargs)
         if kwargs.get('directory'):
             self.directory = kwargs['directory']
-        self.setOption('FileRead', OPT_YES)
-        self.setOption('FileWrite', OPT_YES)
-        self.setOption('FileDelete', OPT_NO)
-        self.setOption('FileAppend', OPT_NO)
-        self.setOption('DirCreate', OPT_NO)
-        self.setOption('DirDelete', OPT_NO)
-        self.setOption('DirList', OPT_YES)
-        self.setOption('DirSubdirs', OPT_YES)
-        self.setOption('IsHome', OPT_YES)
-        self.setOption('AutoCreate', OPT_NO)
+        self.setYesNoOption('FileRead', True)
+        self.setYesNoOption('FileWrite', True)
+        self.setYesNoOption('FileDelete', False)
+        self.setYesNoOption('FileAppend', False)
+        self.setYesNoOption('DirCreate', False)
+        self.setYesNoOption('DirDelete', False)
+        self.setYesNoOption('DirList', True)
+        self.setYesNoOption('DirSubdirs', True)
+        self.setYesNoOption('IsHome', True)
+        self.setYesNoOption('AutoCreate', False)
 
     def addAlias(self, alias):
         if alias in self.aliases: raise Exception('alias \'%s\' already exists' % alias)
@@ -132,52 +144,52 @@ class ftpPermission(ftpSettingElement):
 
     @property
     def ishome(self):
-        return self.getOption('IsHome') == OPT_YES
+        return self.getYesNoOption('IsHome')
     @ishome.setter
     def ishome(self, value):
-        self.setOption('IsHome', OPT_YES if value else OPT_NO)
+        self.setYesNoOption('IsHome', value)
 
     @property
     def fileread(self):
-        return self.getOption('FileRead') == OPT_YES
+        return self.getYesNoOption('FileRead')
     @fileread.setter
     def fileread(self, value):
-        self.setOption('FileRead', OPT_YES if value else OPT_NO)
+        self.setYesNoOption('FileRead', value)
 
     @property
     def filewrite(self):
-        return self.getOption('FileWrite') == OPT_YES
+        return self.getYesNoOption('FileWrite')
     @filewrite.setter
     def filewrite(self, value):
-        self.setOption('FileWrite', OPT_YES if value else OPT_NO)
+        self.setYesNoOption('FileWrite', value)
 
     @property
     def filedelete(self):
-        return self.getOption('FileDelete') == OPT_YES
+        return self.getYesNoOption('FileDelete')
     @filedelete.setter
     def filedelete(self, value):
-        self.setOption('FileDelete', OPT_YES if value else OPT_NO)
+        self.setYesNoOption('FileDelete', value)
 
     @property
     def fileappend(self):
-        return self.getOption('FileAppend') == OPT_YES
+        return self.getYesNoOption('FileAppend')
     @fileappend.setter
     def fileappend(self, value):
-        self.setOption('FileAppend', OPT_YES if value else OPT_NO)
+        self.setYesNoOption('FileAppend', value)
 
     @property
     def dircreate(self):
-        return self.getOption('DirCreate') == OPT_YES
+        return self.getYesNoOption('DirCreate')
     @dircreate.setter
     def dircreate(self, value):
-        self.setOption('DirCreate', OPT_YES if value else OPT_NO)
+        self.setYesNoOption('DirCreate', value)
 
     @property
     def dirdelete(self):
-        return self.getOption('DirDelete') == OPT_YES
+        return self.getYesNoOption('DirDelete')
     @dirdelete.setter
     def dirdelete(self, value):
-        self.setOption('DirDelete', OPT_YES if value else OPT_NO)
+        self.setYesNoOption('DirDelete', value)
 
     def _loadAliases(self):
         try:
@@ -245,10 +257,10 @@ class ftpSecurityBase(ftpSettingElement):
 
     def createElement(self, **kwargs):
         ftpSettingElement.createElement(self, **kwargs)
-        self.setOption('Bypass server userlimit', OPT_DEFAULT if kwargs.get('default') else OPT_NO)
-        self.setOption('Enabled', OPT_DEFAULT)
+        self.setYesNoOption('Bypass server userlimit', None if kwargs.get('default') else False)
+        self.setYesNoOption('Enabled', None)
         self.setOption('Comments', '')
-        self.setOption('ForceSsl', OPT_DEFAULT if kwargs.get('default') else OPT_NO)
+        self.setYesNoOption('ForceSsl', None if kwargs.get('default') else False)
 
     def addPermission(self, directory):
         if directory in self.permissions.keys(): raise Exception('permission for \'%s\' already exists' % directory)
@@ -264,10 +276,10 @@ class ftpSecurityBase(ftpSettingElement):
 
     @property
     def enabled(self):
-        return self.getOption('Enabled')
+        return self.getYesNoOption('Enabled')
     @enabled.setter
     def enabled(self, value):
-        self.setOption('Enabled', value)
+        self.setYesNoOption('Enabled', value)
 
     @property
     def comments(self):
@@ -333,7 +345,6 @@ class ftpSettings:
         self.element = self.document.documentElement
         self._loadGroups()
         self._loadUsers()
-        
 
     def apply(self):
         fp = open(self.config_path, 'wb')
@@ -342,18 +353,28 @@ class ftpSettings:
         call([self.exe_path, RELOAD_COMMAND_ARGS])
         
     def addGroup(self, name):
-        if name in self.groups.keys(): raise Exception('group %s already exists' % name)
+        if name.lower() in self.groups.keys(): raise GroupExistsError(name)
         group = ftpGroup(document=self.document, name=name)
         self.groupsElement.appendChild(group.element)
-        self.groups[group.name] = group
+        self.groups[group.name.lower()] = group
         return group
         
     def addUser(self, name):
-        if name in self.users.keys(): raise Exception('user %s already exists' % name)
+        if name.lower() in self.users.keys(): raise UserExistsError(name)
         user = ftpUser(document=self.document, name=name)
         self.usersElement.appendChild(user.element)
-        self.users[user.name] = user
+        self.users[user.name.lower()] = user
         return user
+
+    def removeGroup(self, name):
+        group = self.groups[name.lower()]
+        self.groupsElement.removeChild(group.element)
+        del self.groups[name.lower()]
+
+    def removeUser(self, name):
+        user = self.users[name.lower()]
+        self.usersElement.removeChild(user.element)
+        del self.users[name.lower()]
 
     def _loadGroups(self):
         try:
@@ -364,7 +385,7 @@ class ftpSettings:
         self.groups = {}
         for groupElement in self.groupsElement.getElementsByTagName('Group'):
             group = ftpGroup(element=groupElement)
-            self.groups[group.name] = group
+            self.groups[group.name.lower()] = group
 
     def _loadUsers(self):
         try:
@@ -375,4 +396,14 @@ class ftpSettings:
         self.users = {}
         for userElement in self.usersElement.getElementsByTagName('User'):
             user = ftpUser(element=userElement)
-            self.users[user.name] = user
+            self.users[user.name.lower()] = user
+
+class UserExistsError(Exception):
+    def __init__(self, user_name):
+        Exception.__init__(self, 'User already exists: %s' % user_name)
+        self.user_name = user_name
+
+class GroupExistsError(Exception):
+    def __init__(self, group_name):
+        Exception.__init__(self, 'Group already exists: %s' % group_name)
+        self.group_name = group_name
