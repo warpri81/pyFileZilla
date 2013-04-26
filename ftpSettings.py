@@ -315,6 +315,10 @@ class ftpGroup(ftpSecurityBase):
 
 
 class ftpUser(ftpSecurityBase):
+    """
+    A user account
+    """
+
     def __init__(self, **kwargs):
         ftpSecurityBase.__init__(self, tagName='User', **kwargs)
 
@@ -322,10 +326,19 @@ class ftpUser(ftpSecurityBase):
         ftpSecurityBase.createElement(self, default=True, **kwargs)
 
     def setPassword(self, password):
+        """
+        Set the password for the user account
+
+        Args:
+            password (str): the new password (pass empty string or None to remove password)
+        """
         self.setOption('Pass', hashlib.md5(password).hexdigest() if password else '')
 
     @property
     def group(self):
+        """
+        The name of the group that the user belongs to
+        """
         return self.getOption('Group')
     @group.setter
     def group(self, value):
@@ -333,12 +346,26 @@ class ftpUser(ftpSecurityBase):
 
 
 class ftpSettings:
+    """
+    A wrapper for a FileZilla Server configuration
+    """
+
     def __init__(self, config_path, exe_path):
+        """
+        Constructor
+
+        Args:
+            config_path (str): path to the configuration XML file
+            exe_path (str): path to the FileZilla executable (for reloading the configuration)
+        """
         self.config_path = config_path
         self.exe_path = exe_path
         self.load()
 
     def load(self):
+        """
+        Loads the configuration file
+        """
         fp = open(self.config_path, 'rb')
         self.document = xml.dom.minidom.parseString(fp.read())
         fp.close()
@@ -347,12 +374,25 @@ class ftpSettings:
         self._loadUsers()
 
     def apply(self):
+        """
+        Saves the configuration file and reloads the server configuration if the server is running
+        """
         fp = open(self.config_path, 'wb')
         fp.write(self.document.toxml())
         fp.close()
         call([self.exe_path, RELOAD_COMMAND_ARGS])
         
     def addGroup(self, name):
+        """
+        Adds a new ftpGroup to the configuration
+
+        Args:
+            name (str): The name of the new group
+        Returns:
+            the new ftpGroup object
+        Raises:
+            GroupExistsError: if the name is not unique
+        """
         if name.lower() in self.groups.keys(): raise GroupExistsError(name)
         group = ftpGroup(document=self.document, name=name)
         self.groupsElement.appendChild(group.element)
@@ -360,6 +400,16 @@ class ftpSettings:
         return group
         
     def addUser(self, name):
+        """
+        Adds a new ftpUser to the configuration
+
+        Args:
+            name (str): The name of the new user
+        Returns:
+            the new ftpUser object
+        Raises:
+            UserExistsError: if the name is not unique
+        """
         if name.lower() in self.users.keys(): raise UserExistsError(name)
         user = ftpUser(document=self.document, name=name)
         self.usersElement.appendChild(user.element)
@@ -367,11 +417,27 @@ class ftpSettings:
         return user
 
     def removeGroup(self, name):
+        """
+        Removed an ftpGroup from the configuration
+
+        Args:
+            name (str): The name of the group to remove
+        Raises:
+            KeyError: if the name of the group does not exist
+        """
         group = self.groups[name.lower()]
         self.groupsElement.removeChild(group.element)
         del self.groups[name.lower()]
 
     def removeUser(self, name):
+        """
+        Removed an ftpUser from the configuration
+
+        Args:
+            name (str): The name of the user to remove
+        Raises:
+            KeyError: if the name of the user does not exist
+        """
         user = self.users[name.lower()]
         self.usersElement.removeChild(user.element)
         del self.users[name.lower()]
