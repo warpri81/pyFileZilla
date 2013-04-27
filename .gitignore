@@ -1,0 +1,4 @@
+*~
+*#
+*.pyc
+sphinx/_build/*
