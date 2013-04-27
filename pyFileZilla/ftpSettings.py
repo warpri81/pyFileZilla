@@ -263,6 +263,12 @@ class ftpSecurityBase(ftpSettingElement):
         self.setYesNoOption('ForceSsl', None if kwargs.get('default') else False)
 
     def addPermission(self, directory):
+        """
+        Adds a :class:`ftpPermission` to the permissions list.
+
+        :param directory: The :class:`ftpPermission` to add.
+        :returns: The added :class:`ftpPermission` object.
+        """
         if directory in self.permissions.keys(): raise Exception('permission for \'%s\' already exists' % directory)
         permission = ftpPermission(document=self.document, directory=directory)
         self.permissionsElement.appendChild(permission.element)
@@ -270,12 +276,18 @@ class ftpSecurityBase(ftpSettingElement):
         return permission
 
     def clearPermissions(self):
+        """
+        Removes all permissions.
+        """
         for permissionNode in self.permissionsElement.getElementsByTagName('Permission'):
             self.permissionsElement.removeChild(permissionNode)
         self.permissions = {}
 
     @property
     def enabled(self):
+        """
+        The object is enabled.
+        """
         return self.getYesNoOption('Enabled')
     @enabled.setter
     def enabled(self, value):
@@ -283,6 +295,9 @@ class ftpSecurityBase(ftpSettingElement):
 
     @property
     def comments(self):
+        """
+        A string used for additional information
+        """
         comments = self.getOption('Comments')
         return comments if comments else ''
     @comments.setter
@@ -310,6 +325,10 @@ class ftpSecurityBase(ftpSettingElement):
 
 
 class ftpGroup(ftpSecurityBase):
+    """
+    A group
+    """
+
     def __init__(self, **kwargs):
         ftpSecurityBase.__init__(self, tagName='Group', **kwargs)
 
@@ -347,24 +366,20 @@ class ftpUser(ftpSecurityBase):
 
 class ftpSettings:
     """
-    A wrapper for a FileZilla Server configuration
+    A wrapper for a FileZilla Server configuration.
+
+    :param config_path: The path to the configuration XML file.
+    :param exe_path: The path to the FileZilla executable (for reloading the configuration).
     """
 
     def __init__(self, config_path, exe_path):
-        """
-        Constructor
-
-        Args:
-            config_path (str): path to the configuration XML file
-            exe_path (str): path to the FileZilla executable (for reloading the configuration)
-        """
         self.config_path = config_path
         self.exe_path = exe_path
         self.load()
 
     def load(self):
         """
-        Loads the configuration file
+        Loads the configuration file.
         """
         fp = open(self.config_path, 'rb')
         self.document = xml.dom.minidom.parseString(fp.read())
@@ -375,7 +390,7 @@ class ftpSettings:
 
     def apply(self):
         """
-        Saves the configuration file and reloads the server configuration if the server is running
+        Saves the configuration file and reloads the server configuration if the server is running.
         """
         fp = open(self.config_path, 'wb')
         fp.write(self.document.toxml())
@@ -384,14 +399,11 @@ class ftpSettings:
         
     def addGroup(self, name):
         """
-        Adds a new ftpGroup to the configuration
+        Adds a new :class:`ftpGroup` to the configuration.
 
-        Args:
-            name (str): The name of the new group
-        Returns:
-            the new ftpGroup object
-        Raises:
-            GroupExistsError: if the name is not unique
+        :param name: The name of the new group.
+                     Raises :exc:`GroupExistsError` if the name is not unique.
+        :returns: the new :class:`ftpGroup` object.
         """
         if name.lower() in self.groups.keys(): raise GroupExistsError(name)
         group = ftpGroup(document=self.document, name=name)
@@ -401,14 +413,11 @@ class ftpSettings:
         
     def addUser(self, name):
         """
-        Adds a new ftpUser to the configuration
+        Adds a new :class:`ftpUser` to the configuration.
 
-        Args:
-            name (str): The name of the new user
-        Returns:
-            the new ftpUser object
-        Raises:
-            UserExistsError: if the name is not unique
+        :param name: The name of the new user.
+                     Raises :exc:`UserExistsError` if the name is not unique.
+        :returns: The new :class:`ftpUser` object.
         """
         if name.lower() in self.users.keys(): raise UserExistsError(name)
         user = ftpUser(document=self.document, name=name)
@@ -418,12 +427,10 @@ class ftpSettings:
 
     def removeGroup(self, name):
         """
-        Removed an ftpGroup from the configuration
+        Removes a :class:`ftpGroup` from the configuration.
 
-        Args:
-            name (str): The name of the group to remove
-        Raises:
-            KeyError: if the name of the group does not exist
+        :param name: The name of the group to remove.
+                     Raises :exc:`KeyError` if the group does not exist.
         """
         group = self.groups[name.lower()]
         self.groupsElement.removeChild(group.element)
@@ -431,12 +438,10 @@ class ftpSettings:
 
     def removeUser(self, name):
         """
-        Removed an ftpUser from the configuration
+        Removes a :class:`ftpUser` from the configuration.
 
-        Args:
-            name (str): The name of the user to remove
-        Raises:
-            KeyError: if the name of the user does not exist
+        :param name: The name of the user to remove.
+                     Raises :exc:`KeyError` if the user does not exist.
         """
         user = self.users[name.lower()]
         self.usersElement.removeChild(user.element)
