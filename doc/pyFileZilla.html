@@ -1,0 +1,311 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>pyFileZilla Package &mdash; pyFileZilla 0.1-alpha documentation</title>
+    
+    <link rel="stylesheet" href="_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '0.1-alpha',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="top" title="pyFileZilla 0.1-alpha documentation" href="index.html" />
+    <link rel="prev" title="Welcome to pyFileZilla’s documentation!" href="index.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="index.html" title="Welcome to pyFileZilla’s documentation!"
+             accesskey="P">previous</a> |</li>
+        <li><a href="index.html">pyFileZilla 0.1-alpha documentation</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="pyfilezilla-package">
+<h1>pyFileZilla Package<a class="headerlink" href="#pyfilezilla-package" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="ftpsettings">
+<h2><tt class="xref py py-class docutils literal"><span class="pre">ftpSettings</span></tt><a class="headerlink" href="#ftpsettings" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="pyFileZilla.ftpSettings.ftpSettings">
+<em class="property">class </em><tt class="descclassname">pyFileZilla.ftpSettings.</tt><tt class="descname">ftpSettings</tt><big>(</big><em>config_path</em>, <em>exe_path</em><big>)</big><a class="headerlink" href="#pyFileZilla.ftpSettings.ftpSettings" title="Permalink to this definition">¶</a></dt>
+<dd><p>A wrapper for a FileZilla Server configuration.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>config_path</strong> &#8211; The path to the configuration XML file.</li>
+<li><strong>exe_path</strong> &#8211; The path to the FileZilla executable (for reloading the configuration).</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<dl class="method">
+<dt id="pyFileZilla.ftpSettings.ftpSettings.addGroup">
+<tt class="descname">addGroup</tt><big>(</big><em>name</em><big>)</big><a class="headerlink" href="#pyFileZilla.ftpSettings.ftpSettings.addGroup" title="Permalink to this definition">¶</a></dt>
+<dd><p>Adds a new <tt class="xref py py-class docutils literal"><span class="pre">ftpGroup</span></tt> to the configuration.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>name</strong> &#8211; The name of the new group.
+Raises <tt class="xref py py-exc docutils literal"><span class="pre">GroupExistsError</span></tt> if the name is not unique.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">the new <tt class="xref py py-class docutils literal"><span class="pre">ftpGroup</span></tt> object.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyFileZilla.ftpSettings.ftpSettings.addUser">
+<tt class="descname">addUser</tt><big>(</big><em>name</em><big>)</big><a class="headerlink" href="#pyFileZilla.ftpSettings.ftpSettings.addUser" title="Permalink to this definition">¶</a></dt>
+<dd><p>Adds a new <tt class="xref py py-class docutils literal"><span class="pre">ftpUser</span></tt> to the configuration.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>name</strong> &#8211; The name of the new user.
+Raises <tt class="xref py py-exc docutils literal"><span class="pre">UserExistsError</span></tt> if the name is not unique.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">The new <tt class="xref py py-class docutils literal"><span class="pre">ftpUser</span></tt> object.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyFileZilla.ftpSettings.ftpSettings.apply">
+<tt class="descname">apply</tt><big>(</big><big>)</big><a class="headerlink" href="#pyFileZilla.ftpSettings.ftpSettings.apply" title="Permalink to this definition">¶</a></dt>
+<dd><p>Saves the configuration file and reloads the server configuration if the server is running.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyFileZilla.ftpSettings.ftpSettings.load">
+<tt class="descname">load</tt><big>(</big><big>)</big><a class="headerlink" href="#pyFileZilla.ftpSettings.ftpSettings.load" title="Permalink to this definition">¶</a></dt>
+<dd><p>Loads the configuration file.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyFileZilla.ftpSettings.ftpSettings.removeGroup">
+<tt class="descname">removeGroup</tt><big>(</big><em>name</em><big>)</big><a class="headerlink" href="#pyFileZilla.ftpSettings.ftpSettings.removeGroup" title="Permalink to this definition">¶</a></dt>
+<dd><p>Removes a <tt class="xref py py-class docutils literal"><span class="pre">ftpGroup</span></tt> from the configuration.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>name</strong> &#8211; The name of the group to remove.
+Raises <tt class="xref py py-exc docutils literal"><span class="pre">KeyError</span></tt> if the group does not exist.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyFileZilla.ftpSettings.ftpSettings.removeUser">
+<tt class="descname">removeUser</tt><big>(</big><em>name</em><big>)</big><a class="headerlink" href="#pyFileZilla.ftpSettings.ftpSettings.removeUser" title="Permalink to this definition">¶</a></dt>
+<dd><p>Removes a <tt class="xref py py-class docutils literal"><span class="pre">ftpUser</span></tt> from the configuration.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>name</strong> &#8211; The name of the user to remove.
+Raises <tt class="xref py py-exc docutils literal"><span class="pre">KeyError</span></tt> if the user does not exist.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="ftpuser">
+<h2><tt class="xref py py-class docutils literal"><span class="pre">ftpUser</span></tt><a class="headerlink" href="#ftpuser" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="pyFileZilla.ftpSettings.ftpUser">
+<em class="property">class </em><tt class="descclassname">pyFileZilla.ftpSettings.</tt><tt class="descname">ftpUser</tt><big>(</big><em>**kwargs</em><big>)</big><a class="headerlink" href="#pyFileZilla.ftpSettings.ftpUser" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <tt class="xref py py-class docutils literal"><span class="pre">pyFileZilla.ftpSettings.ftpSecurityBase</span></tt></p>
+<p>A user account</p>
+<dl class="method">
+<dt id="pyFileZilla.ftpSettings.ftpUser.addPermission">
+<tt class="descname">addPermission</tt><big>(</big><em>directory</em><big>)</big><a class="headerlink" href="#pyFileZilla.ftpSettings.ftpUser.addPermission" title="Permalink to this definition">¶</a></dt>
+<dd><p>Adds a <tt class="xref py py-class docutils literal"><span class="pre">ftpPermission</span></tt> to the permissions list.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>directory</strong> &#8211; The <tt class="xref py py-class docutils literal"><span class="pre">ftpPermission</span></tt> to add.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">The added <tt class="xref py py-class docutils literal"><span class="pre">ftpPermission</span></tt> object.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyFileZilla.ftpSettings.ftpUser.clearPermissions">
+<tt class="descname">clearPermissions</tt><big>(</big><big>)</big><a class="headerlink" href="#pyFileZilla.ftpSettings.ftpUser.clearPermissions" title="Permalink to this definition">¶</a></dt>
+<dd><p>Removes all permissions.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pyFileZilla.ftpSettings.ftpUser.comments">
+<tt class="descname">comments</tt><a class="headerlink" href="#pyFileZilla.ftpSettings.ftpUser.comments" title="Permalink to this definition">¶</a></dt>
+<dd><p>A string used for additional information</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pyFileZilla.ftpSettings.ftpUser.enabled">
+<tt class="descname">enabled</tt><a class="headerlink" href="#pyFileZilla.ftpSettings.ftpUser.enabled" title="Permalink to this definition">¶</a></dt>
+<dd><p>The object is enabled.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pyFileZilla.ftpSettings.ftpUser.group">
+<tt class="descname">group</tt><a class="headerlink" href="#pyFileZilla.ftpSettings.ftpUser.group" title="Permalink to this definition">¶</a></dt>
+<dd><p>The name of the group that the user belongs to</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyFileZilla.ftpSettings.ftpUser.setPassword">
+<tt class="descname">setPassword</tt><big>(</big><em>password</em><big>)</big><a class="headerlink" href="#pyFileZilla.ftpSettings.ftpUser.setPassword" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set the password for the user account</p>
+<dl class="docutils">
+<dt>Args:</dt>
+<dd>password (str): the new password (pass empty string or None to remove password)</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="ftpgroup">
+<h2><tt class="xref py py-class docutils literal"><span class="pre">ftpGroup</span></tt><a class="headerlink" href="#ftpgroup" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="pyFileZilla.ftpSettings.ftpGroup">
+<em class="property">class </em><tt class="descclassname">pyFileZilla.ftpSettings.</tt><tt class="descname">ftpGroup</tt><big>(</big><em>**kwargs</em><big>)</big><a class="headerlink" href="#pyFileZilla.ftpSettings.ftpGroup" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <tt class="xref py py-class docutils literal"><span class="pre">pyFileZilla.ftpSettings.ftpSecurityBase</span></tt></p>
+<p>A group</p>
+<dl class="method">
+<dt id="pyFileZilla.ftpSettings.ftpGroup.addPermission">
+<tt class="descname">addPermission</tt><big>(</big><em>directory</em><big>)</big><a class="headerlink" href="#pyFileZilla.ftpSettings.ftpGroup.addPermission" title="Permalink to this definition">¶</a></dt>
+<dd><p>Adds a <tt class="xref py py-class docutils literal"><span class="pre">ftpPermission</span></tt> to the permissions list.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>directory</strong> &#8211; The <tt class="xref py py-class docutils literal"><span class="pre">ftpPermission</span></tt> to add.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">The added <tt class="xref py py-class docutils literal"><span class="pre">ftpPermission</span></tt> object.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyFileZilla.ftpSettings.ftpGroup.clearPermissions">
+<tt class="descname">clearPermissions</tt><big>(</big><big>)</big><a class="headerlink" href="#pyFileZilla.ftpSettings.ftpGroup.clearPermissions" title="Permalink to this definition">¶</a></dt>
+<dd><p>Removes all permissions.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pyFileZilla.ftpSettings.ftpGroup.comments">
+<tt class="descname">comments</tt><a class="headerlink" href="#pyFileZilla.ftpSettings.ftpGroup.comments" title="Permalink to this definition">¶</a></dt>
+<dd><p>A string used for additional information</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pyFileZilla.ftpSettings.ftpGroup.enabled">
+<tt class="descname">enabled</tt><a class="headerlink" href="#pyFileZilla.ftpSettings.ftpGroup.enabled" title="Permalink to this definition">¶</a></dt>
+<dd><p>The object is enabled.</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">pyFileZilla Package</a><ul>
+<li><a class="reference internal" href="#ftpsettings"><tt class="docutils literal"><span class="pre">ftpSettings</span></tt></a></li>
+<li><a class="reference internal" href="#ftpuser"><tt class="docutils literal"><span class="pre">ftpUser</span></tt></a></li>
+<li><a class="reference internal" href="#ftpgroup"><tt class="docutils literal"><span class="pre">ftpGroup</span></tt></a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="index.html"
+                        title="previous chapter">Welcome to pyFileZilla&#8217;s documentation!</a></p>
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="_sources/pyFileZilla.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="index.html" title="Welcome to pyFileZilla’s documentation!"
+             >previous</a> |</li>
+        <li><a href="index.html">pyFileZilla 0.1-alpha documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2013, Warren Price.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2b1.
+    </div>
+  </body>
+</html>
