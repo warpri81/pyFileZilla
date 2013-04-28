@@ -1,5 +1,5 @@
-pyFileZilla Package
-===================
+pyFileZilla API
+===============
 
 :class:`ftpSettings`
 --------------------

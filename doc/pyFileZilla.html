@@ -6,7 +6,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>pyFileZilla Package &mdash; pyFileZilla 0.1-alpha documentation</title>
+    <title>pyFileZilla API &mdash; pyFileZilla 0.1-alpha documentation</title>
     
     <link rel="stylesheet" href="_static/default.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
@@ -24,7 +24,7 @@
     <script type="text/javascript" src="_static/underscore.js"></script>
     <script type="text/javascript" src="_static/doctools.js"></script>
     <link rel="top" title="pyFileZilla 0.1-alpha documentation" href="index.html" />
-    <link rel="prev" title="Welcome to pyFileZilla’s documentation!" href="index.html" /> 
+    <link rel="prev" title="Usage" href="usage.html" /> 
   </head>
   <body>
     <div class="related">
@@ -34,7 +34,7 @@
           <a href="genindex.html" title="General Index"
              accesskey="I">index</a></li>
         <li class="right" >
-          <a href="index.html" title="Welcome to pyFileZilla’s documentation!"
+          <a href="usage.html" title="Usage"
              accesskey="P">previous</a> |</li>
         <li><a href="index.html">pyFileZilla 0.1-alpha documentation</a> &raquo;</li> 
       </ul>
@@ -45,8 +45,8 @@
         <div class="bodywrapper">
           <div class="body">
             
-  <div class="section" id="pyfilezilla-package">
-<h1>pyFileZilla Package<a class="headerlink" href="#pyfilezilla-package" title="Permalink to this headline">¶</a></h1>
+  <div class="section" id="pyfilezilla-api">
+<h1>pyFileZilla API<a class="headerlink" href="#pyfilezilla-api" title="Permalink to this headline">¶</a></h1>
 <div class="section" id="ftpsettings">
 <h2><tt class="xref py py-class docutils literal"><span class="pre">ftpSettings</span></tt><a class="headerlink" href="#ftpsettings" title="Permalink to this headline">¶</a></h2>
 <dl class="class">
@@ -171,7 +171,8 @@ Raises <tt class="xref py py-exc docutils literal"><span class="pre">KeyError</s
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>directory</strong> &#8211; The <tt class="xref py py-class docutils literal"><span class="pre">ftpPermission</span></tt> to add.</td>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>directory</strong> &#8211; The path to the directory. 
+Raises <tt class="xref py py-exc docutils literal"><span class="pre">Exception</span></tt> if the user already has a permission for the directory.</td>
 </tr>
 <tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">The added <tt class="xref py py-class docutils literal"><span class="pre">ftpPermission</span></tt> object.</td>
 </tr>
@@ -230,7 +231,8 @@ Raises <tt class="xref py py-exc docutils literal"><span class="pre">KeyError</s
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>directory</strong> &#8211; The <tt class="xref py py-class docutils literal"><span class="pre">ftpPermission</span></tt> to add.</td>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>directory</strong> &#8211; The path to the directory. 
+Raises <tt class="xref py py-exc docutils literal"><span class="pre">Exception</span></tt> if the user already has a permission for the directory.</td>
 </tr>
 <tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">The added <tt class="xref py py-class docutils literal"><span class="pre">ftpPermission</span></tt> object.</td>
 </tr>
@@ -291,7 +293,7 @@ Raises <tt class="xref py py-exc docutils literal"><span class="pre">KeyError</s
         <div class="sphinxsidebarwrapper">
   <h3><a href="index.html">Table Of Contents</a></h3>
   <ul>
-<li><a class="reference internal" href="#">pyFileZilla Package</a><ul>
+<li><a class="reference internal" href="#">pyFileZilla API</a><ul>
 <li><a class="reference internal" href="#ftpsettings"><tt class="docutils literal"><span class="pre">ftpSettings</span></tt></a></li>
 <li><a class="reference internal" href="#ftpuser"><tt class="docutils literal"><span class="pre">ftpUser</span></tt></a></li>
 <li><a class="reference internal" href="#ftpgroup"><tt class="docutils literal"><span class="pre">ftpGroup</span></tt></a></li>
@@ -301,8 +303,8 @@ Raises <tt class="xref py py-exc docutils literal"><span class="pre">KeyError</s
 </ul>
 
   <h4>Previous topic</h4>
-  <p class="topless"><a href="index.html"
-                        title="previous chapter">Welcome to pyFileZilla&#8217;s documentation!</a></p>
+  <p class="topless"><a href="usage.html"
+                        title="previous chapter">Usage</a></p>
   <h3>This Page</h3>
   <ul class="this-page-menu">
     <li><a href="_sources/pyFileZilla.txt"
@@ -332,7 +334,7 @@ Raises <tt class="xref py py-exc docutils literal"><span class="pre">KeyError</s
           <a href="genindex.html" title="General Index"
              >index</a></li>
         <li class="right" >
-          <a href="index.html" title="Welcome to pyFileZilla’s documentation!"
+          <a href="usage.html" title="Usage"
              >previous</a> |</li>
         <li><a href="index.html">pyFileZilla 0.1-alpha documentation</a> &raquo;</li> 
       </ul>
