@@ -4,21 +4,24 @@ pyFileZilla Package
 :class:`ftpSettings`
 --------------------
 
-.. autoclass:: pyFileZilla.ftpSettings.ftpSettings
+.. autoclass:: pyFileZilla.ftpSettings
     :members:
 
 :class:`ftpUser`
 ----------------
 
-.. autoclass:: pyFileZilla.ftpSettings.ftpUser
+.. autoclass:: pyFileZilla.ftpUser
     :members:
     :inherited-members:
-    :show-inheritance:
 
 :class:`ftpGroup`
 -----------------
 
-.. autoclass:: pyFileZilla.ftpSettings.ftpGroup
+.. autoclass:: pyFileZilla.ftpGroup
     :members:
     :inherited-members:
-    :show-inheritance:
+
+:func:`filezilla_reload_config`
+------------------------------------------
+
+.. autofunction:: pyFileZilla.ftpSettings.filezilla_reload_config
