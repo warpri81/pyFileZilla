@@ -280,7 +280,8 @@ class ftpSecurityBase(ftpSettingElement):
         """
         Adds a :class:`ftpPermission` to the permissions list.
 
-        :param directory: The :class:`ftpPermission` to add.
+        :param directory: The path to the directory. 
+                          Raises :exc:`Exception` if the user already has a permission for the directory.
         :returns: The added :class:`ftpPermission` object.
         """
         if directory in self.permissions.keys(): raise Exception('permission for \'%s\' already exists' % directory)
