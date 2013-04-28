@@ -1,10 +1,9 @@
 import os
 import hashlib
 from subprocess import call
+from StringIO import StringIO
 import xml.dom.minidom
 
-
-RELOAD_COMMAND_ARGS = '/reload-config'
 
 YESNO_VALUES = {
     False: '0',
@@ -21,6 +20,21 @@ SPEED_DEFAULT = '0'
 SPEED_UNLIMITED = '1'
 SPEED_CONSTANT = '2'
 SPEED_RULES = '3'
+
+
+def filezilla_reload_config(filezilla_exe_path):
+    """
+    A convenience function for reloading the FileZilla Server configuration.
+
+    Executes the server executable with **reload-config** command line switch.
+
+    .. note::
+
+       The call uses Windows style command arguments, so it will not work in other OSes.
+
+    :param filezilla_exe_path: The path to the FileZilla Server executable.
+    """
+    call([filezilla_exe_path, "/reload-config"])
 
 
 class ftpElement(object):
@@ -368,34 +382,44 @@ class ftpSettings:
     """
     A wrapper for a FileZilla Server configuration.
 
-    :param config_path: The path to the configuration XML file.
-    :param exe_path: The path to the FileZilla executable (for reloading the configuration).
+    :keyword config_file: The XML configuration file - may be a file name or file-like object.
+                          If no file is provided, the object will be initialized with an empty configuration file.
     """
 
-    def __init__(self, config_path, exe_path):
-        self.config_path = config_path
-        self.exe_path = exe_path
-        self.load()
+    def __init__(self, config_file=None):
+        if config_file != None:
+            self.load(config_file)
+        else:
+            self.load(
+                StringIO(
+                    """<?xml version="1.0"?>
+                       <FileZillaServer>
+                           <Settings></Settings>
+                           <Groups></Groups>
+                           <Users></Users>
+                       </FileZillaServer>
+                    """
+                )
+            )
 
-    def load(self):
+    def load(self, config_file):
         """
-        Loads the configuration file.
+        Loads the configuration from a file.
+
+        :param config_file: The XML configuration file - may be a file name or file-like object.
         """
-        fp = open(self.config_path, 'rb')
-        self.document = xml.dom.minidom.parseString(fp.read())
-        fp.close()
+        self.document = xml.dom.minidom.parse(config_file)
         self.element = self.document.documentElement
         self._loadGroups()
         self._loadUsers()
 
-    def apply(self):
+    def write(self, config_file):
         """
-        Saves the configuration file and reloads the server configuration if the server is running.
+        Writes the configuration to a file.
+
+        :param config_file: The file object to write the XML configuration to.  The object should have a :func:`write()` function.
         """
-        fp = open(self.config_path, 'wb')
-        fp.write(self.document.toxml())
-        fp.close()
-        call([self.exe_path, RELOAD_COMMAND_ARGS])
+        self.document.writexml(config_file)
         
     def addGroup(self, name):
         """

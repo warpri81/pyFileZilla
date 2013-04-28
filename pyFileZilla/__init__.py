@@ -5,4 +5,6 @@ from ftpSettings import \
     ftpGroup, ftpUser, \
     ftpPermission, ftpSpeedLimit, \
     UserExistsError, GroupExistsError, \
-    SPEED_DEFAULT, SPEED_UNLIMITED, SPEED_CONSTANT, SPEED_RULES
+    SPEED_DEFAULT, SPEED_UNLIMITED, SPEED_CONSTANT, SPEED_RULES, \
+    filezilla_reload_config
+
